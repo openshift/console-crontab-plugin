@@ -2,7 +2,7 @@
   {
     "type": "console.flag/model",
     "properties": {
-      "flag": "CONSOLE_CRONTABS",
+      "flag": "CRONTAB",
       "model": {
         "group": "stable.example.com",
         "kind": "CronTab",

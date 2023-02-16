@@ -8,7 +8,7 @@ export const CronTabModel: K8sModel = {
   apiVersion: 'v1',
   apiGroup: 'stable.example.com',
   plural: 'crontabs',
-  abbr: 'crontabs',
+  abbr: 'ct',
   namespaced: true,
   kind: 'CronTab',
   id: 'crontab',
