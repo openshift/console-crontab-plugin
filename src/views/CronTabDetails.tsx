@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import Loading from '@crontab-utils/Loading';
 import {
   HorizontalNav,
   K8sResourceCommon,
   useK8sWatchResource,
 } from '@openshift-console/dynamic-plugin-sdk';
-import { Bullseye } from '@patternfly/react-core';
+import { Bullseye, Spinner } from '@patternfly/react-core';
 
 import CronTabPageTitle from './CronTabDetails/CronTabPageTitle';
 import CronTabDetailsPage from './CronTabDetailsPage';
@@ -55,7 +54,7 @@ const CronTabNavPage: React.FC<CronTabPageProps> = ({ name, namespace, kind }) =
         <HorizontalNav pages={pages} resource={cronTab} />
       ) : (
         <Bullseye>
-          <Loading />
+          <Spinner isSVG size='xl' />
         </Bullseye>
       )}
     </>
