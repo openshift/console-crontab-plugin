@@ -79,11 +79,7 @@ After pushing an image with your changes to an image registry, you can deploy
 the plugin to a cluster by instantiating the template:
 
 ```sh
-oc process -f oc-manifest.yaml \
-  -p PLUGIN_NAME=crontab-plugin \
-  -p NAMESPACE=crontab-plugin \
-  -p IMAGE=quay.io/crontab-plugin/crontab-plugin:latest \
-  | oc create -f -
+oc apply -f oc-manifest.yaml
 ```
 
 Once deployed, patch the
