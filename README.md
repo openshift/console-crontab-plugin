@@ -1,7 +1,6 @@
 # OpenShift CronTab Dynamic Plugin
 
-This project server as a minimal functional template for an Openshift dynamic plugin. It shows
-basic operations with a Custom Resource Definition (CRD), in this case CronTab CRD, such as creating, editing and deleting.
+This project serves as a minimal template for an Openshift dynamic plugin. It shows basic operations with a Custom Resource Definition (CRD), in this case CronTab CRD, such as creating, editing and deleting.
 
 It requires OpenShift 4.11.
 

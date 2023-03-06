@@ -61,7 +61,7 @@
     "name": "crontab-plugin",
     "version": "0.0.1",
     "displayName": "OpenShift CronTab Plugin",
-    "description": "CronTab plugin for OpenShift Console",
+    "description": "Sample plugin for OpenShift Console. This plugin adds basic functionalities to the OpenShift Console that allows users to manage CronTab CRD.",
     "exposedModules": {
       "CronTabList": "./views/CronTabList/CronTabList.tsx",
       "CronTabDetails": "./views/CronTabDetails.tsx",
@@ -70,7 +70,7 @@
       "useCronTabActionsProvider": "./views/hooks/useCronTabActionsProvider.tsx"
     },
     "dependencies": {
-      "@console/pluginAPI": "*"
+      "@console/pluginAPI": "^4.11"
     }
   },
   "resolutions": {
