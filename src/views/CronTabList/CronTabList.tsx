@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { CronTabModel } from '@crontab-model/CronTabModel';
 import { CronTabKind } from '@crontab-model/CronTabModel';
 import { modelToGroupVersionKind, modelToRef } from '@crontab-utils/utils';
@@ -20,8 +19,6 @@ import { sortable } from '@patternfly/react-table';
 
 import CronTabRowActions from './CronTabRowActions';
 
-// import { customActionsToggle, defaultActions } from './components/CronTabActions';
-import './CronTabList.scss';
 
 type CronTabListProps = {
   namespace: string;
