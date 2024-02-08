@@ -18,6 +18,10 @@ declare global {
         options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
       ): Chainable<Element>;
       byTestActionID(selector: string): Chainable<Element>;
+      byTestSelector(
+        selector: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+      ): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
@@ -47,3 +51,13 @@ Cypress.Commands.add(
 Cypress.Commands.add("byTestActionID", (selector: string) => {
   cy.get(`[data-test-action="${selector}"]:not(.pf-m-disabled)`);
 });
+
+Cypress.Commands.add(
+  "byTestSelector",
+  (
+    selector: string,
+    options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+  ) => {
+    cy.get(`[data-test-selector="${selector}"]`, options);
+  }
+);

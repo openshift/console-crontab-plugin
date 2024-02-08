@@ -2,6 +2,7 @@
 import "./login";
 import "./project";
 import "./selectors";
+import "./nav";
 
 export const checkErrors = () =>
   cy.window().then((win) => {

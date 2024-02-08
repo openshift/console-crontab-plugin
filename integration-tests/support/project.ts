@@ -14,15 +14,15 @@ declare global {
 Cypress.Commands.add("createProject", (name: string) => {
   cy.log(`Create project`);
   cy.exec(`oc new-project ${name}`).then((result) => {
-    cy.log("Error creating project: ", result.stderr);
-    cy.log("Successfully created project: ", result.stdout);
+    result.stderr && cy.log("Error creating project: ", result.stderr);
+    result.stdout && cy.log("Successfully created project: ", result.stdout);
   });
 });
 
 Cypress.Commands.add("deleteProject", (name: string) => {
   cy.log(`Delete project`);
   cy.exec(`oc delete project ${name}`).then((result) => {
-    cy.log("Error deleting project: ", result.stderr);
-    cy.log("Successfully deleted project: ", result.stdout);
+    result.stderr && cy.log("Error deleting project: ", result.stderr);
+    result.stdout && cy.log("Successfully deleted project: ", result.stdout);
   });
 });

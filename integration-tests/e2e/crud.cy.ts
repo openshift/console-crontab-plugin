@@ -1,25 +1,14 @@
 import { PLUGIN_NAME } from "../../src/const";
-import {
-  KEBAB_ACTION_DELETE_ID,
-  KEBAB_ACTION_EDIT_ANNOTATIONS_ID,
-  KEBAB_ACTION_EDIT_LABELS_ID,
-} from "../../src/views/CronTabList/const";
 import { checkErrors, testName } from "../support";
-import {
-  common,
-  getNamespacedListPageURL,
-  setup,
-  teardown,
-} from "../views/common";
+import { common, setup, teardown } from "../views/common";
 import { listPage } from "../views/list-page";
 import { modal } from "../views/modal";
 import { labelsModal } from "../views/labels-modal";
 import { annotationModal } from "../views/annotations-modal";
 import { detailsPage } from "../views/details-page";
+import { nav } from "../views/nav";
 
-const listPageURL = getNamespacedListPageURL(testName);
 const cronTabName = "my-new-cron-object";
-const detailsPageURL = `${listPageURL}/${cronTabName}`;
 const testLabel = "key1=value1";
 const annotations = [
   {
@@ -28,11 +17,11 @@ const annotations = [
   },
 ];
 
-describe(`${PLUGIN_NAME} list page test`, () => {
+describe(`${PLUGIN_NAME}`, () => {
   before(() => {
     cy.login();
-    cy.createProject(testName);
     setup();
+    cy.createProject(testName);
   });
 
   afterEach(() => {
@@ -40,23 +29,21 @@ describe(`${PLUGIN_NAME} list page test`, () => {
   });
 
   after(() => {
-    teardown();
     cy.deleteProject(testName);
+    teardown();
     cy.logout();
   });
 
   it("renders the CronTabs list page", () => {
-    cy.visit(listPageURL);
+    nav.sidenav.clickNavLink(["Workloads", "CronTabs"]);
     common.resourceTitleShouldHaveText("CronTabs");
     cy.byTestID("item-create").should("exist");
     listPage.rows.countShouldBe(0);
   });
 
-  // TODO (jon) - this test should be split into 4 independent cases.
-  // - create, edit annotations, edit labels, delete
-  it("Create and interact with a CronTab from the list page", () => {
+  it("creates, displays, updates, and deletes a CronTab", () => {
     cy.log("Create CronTab");
-    cy.visit(listPageURL);
+    nav.sidenav.clickNavLink(["Workloads", "CronTabs"]);
     common.resourceTitleShouldHaveText("CronTabs");
     listPage.clickCreateYAMLbutton();
     cy.byLegacyTestID("resource-title").should("contain", "Create CronTab");
@@ -64,14 +51,29 @@ describe(`${PLUGIN_NAME} list page test`, () => {
     common.inlineDangerAlert().should("not.exist");
     common.resourceTitleShouldHaveText(cronTabName);
 
+    cy.log("Edit labels");
+    detailsPage.detailsItemValueShouldContain("Labels", "No labels");
+    cy.byTestID("Labels-details-item__edit-button").click();
+    modal.shouldBeOpened();
+    modal.modalTitleShouldContain("Edit labels");
+    modal.submitShouldBeEnabled();
+    labelsModal.countShouldBe(0);
+    labelsModal.inputLabel(testLabel);
+    labelsModal.countShouldBe(1);
+    labelsModal.labelEquals(0, testLabel);
+    modal.submit();
+    modal.shouldBeClosed();
+    detailsPage.detailsItemValueShouldContain("Labels", testLabel);
+    detailsPage.clickEditLabels();
+    modal.shouldBeOpened();
+    modal.modalTitleShouldContain("Edit labels");
+    labelsModal.countShouldBe(1);
+    labelsModal.labelEquals(0, testLabel);
+    modal.cancel();
+
     cy.log("Edit annotations");
-    cy.visit(detailsPageURL);
     detailsPage.detailsItemValueShouldContain("Annotations", "0 annotations");
-    cy.visit(listPageURL);
-    listPage.rows.clickKebabAction(
-      cronTabName,
-      KEBAB_ACTION_EDIT_ANNOTATIONS_ID
-    );
+    cy.byTestID("edit-annotations").click();
     modal.shouldBeOpened();
     modal.modalTitleShouldContain("Edit annotations");
     annotationModal.countShouldBe(1);
@@ -83,7 +85,6 @@ describe(`${PLUGIN_NAME} list page test`, () => {
     annotationModal.countShouldBe(annotations.length);
     modal.submit();
     modal.shouldBeClosed();
-    cy.visit(detailsPageURL);
     detailsPage.detailsItemValueShouldContain("Annotations", "1 annotation");
     detailsPage.clickEditAnnotations();
     modal.shouldBeOpened();
@@ -92,34 +93,36 @@ describe(`${PLUGIN_NAME} list page test`, () => {
     annotations.forEach(({ key, value }, index) => {
       annotationModal.annotationEquals(index, key, value);
     });
+    modal.cancel();
 
-    cy.log("Edit labels");
-    cy.visit(detailsPageURL);
-    detailsPage.detailsItemValueShouldContain("Labels", "No labels");
-    cy.visit(listPageURL);
-    listPage.rows.clickKebabAction(cronTabName, KEBAB_ACTION_EDIT_LABELS_ID);
-    modal.shouldBeOpened();
-    modal.modalTitleShouldContain("Edit labels");
-    modal.submitShouldBeEnabled();
-    labelsModal.countShouldBe(0);
-    labelsModal.inputLabel(testLabel);
-    labelsModal.countShouldBe(1);
-    labelsModal.labelEquals(0, testLabel);
-    modal.submit();
-    modal.shouldBeClosed();
-    cy.visit(detailsPageURL);
-    detailsPage.detailsItemValueShouldContain("Labels", testLabel);
-    detailsPage.clickEditLabels();
-    modal.shouldBeOpened();
-    modal.modalTitleShouldContain("Edit labels");
-    labelsModal.countShouldBe(1);
-    labelsModal.labelEquals(0, testLabel);
+    cy.log("Verify console.resource/details-item extensions are present");
+    cy.byTestSelector("details-item-label__CronSpec").should(
+      "include.text",
+      "CronSpec"
+    );
+    cy.byTestSelector("details-item-value__CronSpec").should(
+      "include.text",
+      "* * * * */5"
+    );
+    cy.byTestSelector("details-item-label__Image").should(
+      "include.text",
+      "Image"
+    );
+    cy.byTestSelector("details-item-value__Image").should(
+      "include.text",
+      "my-awesome-cron-image"
+    );
+    cy.byTestSelector("details-item-label__Replicas").should(
+      "include.text",
+      "Replicas"
+    );
+    cy.byTestSelector("details-item-value__Replicas").should(
+      "include.text",
+      "1"
+    );
 
     cy.log("Delete CronTab");
-    cy.visit(listPageURL);
-    listPage.rows.shouldBeLoaded();
-    listPage.rows.shouldExist(cronTabName);
-    listPage.rows.clickKebabAction(cronTabName, KEBAB_ACTION_DELETE_ID);
+    detailsPage.clickPageActionFromDropdown("Delete CronTab");
     modal.shouldBeOpened();
     modal.submitShouldBeEnabled();
     modal.submit();

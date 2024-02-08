@@ -8,4 +8,8 @@ export const detailsPage = {
       value
     );
   },
+  clickPageActionFromDropdown: (actionID: string) => {
+    cy.byLegacyTestID("actions-menu-button").click();
+    cy.byTestActionID(actionID).click();
+  },
 };
