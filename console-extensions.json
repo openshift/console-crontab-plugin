@@ -61,5 +61,47 @@
         "required": ["CRONTAB"]
       }
     }
+  },
+  {
+    "type": "console.resource/details-item",
+    "properties": {
+      "model": {
+        "group": "stable.example.com",
+        "kind": "CronTab",
+        "version": "v1"
+      },
+      "id": "cronSpec",
+      "column": "right",
+      "title": "%plugin__console-crontab-plugin~CronSpec%",
+      "path": "spec.cronSpec"
+    }
+  },
+  {
+    "type": "console.resource/details-item",
+    "properties": {
+      "model": {
+        "group": "stable.example.com",
+        "kind": "CronTab",
+        "version": "v1"
+      },
+      "id": "image",
+      "column": "right",
+      "title": "%plugin__console-crontab-plugin~Image%",
+      "path": "spec.image"
+    }
+  },
+  {
+    "type": "console.resource/details-item",
+    "properties": {
+      "model": {
+        "group": "stable.example.com",
+        "kind": "CronTab",
+        "version": "v1"
+      },
+      "id": "replicas",
+      "column": "right",
+      "title": "%plugin__console-crontab-plugin~Replicas%",
+      "path": "spec.replicas"
+    }
   }
 ]
