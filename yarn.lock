@@ -313,44 +313,44 @@
     semver "^7.3.7"
     yup "^0.32.11"
 
-"@patternfly/react-core@^6.2.0-prerelease.15", "@patternfly/react-core@^6.2.0-prerelease.17":
-  version "6.2.0-prerelease.17"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-core/-/react-core-6.2.0-prerelease.17.tgz#d01657e2754306f0e76b718941ca757f9d0fbdfe"
-  integrity sha512-NWiif+SMXOYTDVwcVv1OAOKEN95PFRqeDgEcA580M0KxNqEo1oFaNKQ/xUuhpYxGuvEj0oVjcOjN9lglyOQZZA==
+"@patternfly/react-core@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-core/-/react-core-6.2.0.tgz#8cd2e5b3716352ab21859f3aebeeafd42f72035e"
+  integrity sha512-yh5de7Tv1ft8c4+xHi5wr49yk4E/FgOXsxj3bl2VjdieTxXmZEmeWcqeYFXoUdnMSqCay4Mt5k6gyRYgO0y9oQ==
   dependencies:
-    "@patternfly/react-icons" "^6.2.0-prerelease.2"
-    "@patternfly/react-styles" "^6.2.0-prerelease.2"
-    "@patternfly/react-tokens" "^6.2.0-prerelease.2"
+    "@patternfly/react-icons" "^6.2.0"
+    "@patternfly/react-styles" "^6.2.0"
+    "@patternfly/react-tokens" "^6.2.0"
     focus-trap "7.6.4"
     react-dropzone "^14.3.5"
     tslib "^2.8.1"
 
-"@patternfly/react-icons@^6.2.0-prerelease.2":
-  version "6.2.0-prerelease.2"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-6.2.0-prerelease.2.tgz#b695a12733d90004d243b37458bfe52947317d8e"
-  integrity sha512-3ymG24ICMAvMqrDPzU8ycPcsHht4RfHjQil3ox43wwHI+nLrpywAgE9z6GtAzwtdm+DVZHBT1CWLWuAgdofX8w==
+"@patternfly/react-icons@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-6.2.0.tgz#a140b893b8fa945c891fbf4bd797d992be8ec5f6"
+  integrity sha512-moGLd1qM80+yjVVVEl+aNHQn7K5ANMUgyQZ4ECxnA/vjPlWmNZSJ1imsaCxYrywp9zzO0yZ5uN5wO/Z2hdz3MA==
 
-"@patternfly/react-styles@^6.2.0-prerelease.2":
-  version "6.2.0-prerelease.2"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-6.2.0-prerelease.2.tgz#32935b2e8d3bfb8aa4287e06a9aa3d4fbd550eea"
-  integrity sha512-1YJH8Ozu05AHCBNGRZyNA5X1HxNGXuYTQvcR8FbVaNGuuWtvZxzb2EovN9xYVBu2joh+/LCLhiTAXI4eNKw3Ag==
+"@patternfly/react-styles@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-6.2.0.tgz#0a1dec5bd81d74158cc33b6d1f0eedeb1a2665a8"
+  integrity sha512-Cv2flqlc8GEuzshjQrLj1qfYAVx9IDOudi46yfiOIvG7GUPdDCH+Ib4XGC/oZry7qj1Dwr78BJ6QOinM1cSiog==
 
-"@patternfly/react-table@^6.2.0-prerelease.16":
-  version "6.2.0-prerelease.18"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-table/-/react-table-6.2.0-prerelease.18.tgz#1bb01e3a85fbb3ac972f6476c47cf57a47c37791"
-  integrity sha512-W0NtprppJ8yMH5i+K8lfwdmmTHW5X96Ax4savrsSJ9b8AfI6xcsgUXjUOLqVa+Umv9A5m4S5GJOh/llvevGdhg==
+"@patternfly/react-table@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-table/-/react-table-6.2.0.tgz#23396b0539a35f75870455b709c86ef580443b0f"
+  integrity sha512-6FwyzvaajgN5x/qrpPWax+GNyRllAd1dHhrgpZqZbeWyoywEifr1K2dxYmYNzMKOyYj9jEK0NnCWWIzFvaVfDg==
   dependencies:
-    "@patternfly/react-core" "^6.2.0-prerelease.17"
-    "@patternfly/react-icons" "^6.2.0-prerelease.2"
-    "@patternfly/react-styles" "^6.2.0-prerelease.2"
-    "@patternfly/react-tokens" "^6.2.0-prerelease.2"
+    "@patternfly/react-core" "^6.2.0"
+    "@patternfly/react-icons" "^6.2.0"
+    "@patternfly/react-styles" "^6.2.0"
+    "@patternfly/react-tokens" "^6.2.0"
     lodash "^4.17.21"
     tslib "^2.8.1"
 
-"@patternfly/react-tokens@^6.2.0-prerelease.2":
-  version "6.2.0-prerelease.2"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-tokens/-/react-tokens-6.2.0-prerelease.2.tgz#d1db6f455f581daa84d728c0a248802096cd797a"
-  integrity sha512-3snWPqFBOcv0P0UZk5SfG3ZrhBaMb5P1griaMydA/cXdWe9XRX5oP4QuE3uGtQfBVuAaEqRDokQfo2xhWP2Gyw==
+"@patternfly/react-tokens@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-tokens/-/react-tokens-6.2.0.tgz#7535256d934a27ba6ba4a1f80588e244811e953b"
+  integrity sha512-KyzbsQYXTCxTmwkLlN4GdmTCNlOKnPUpY389loaC4/B0wHNq8Vw4OMIsAPVi4RSSvTaSxitlPAwt3xBTjNIzFA==
 
 "@remix-run/router@1.8.0":
   version "1.8.0"
