@@ -63,6 +63,19 @@
     }
   },
   {
+    "type": "console.resource/create",
+    "properties": {
+      "name": "default",
+      "model": "ExtensionK8sModel",
+      "component": {
+        "$codeRef": "CrontabForm"
+      },
+      "flags": {
+        "required": ["CRONTAB"]
+      }
+    }
+  },
+  {
     "type": "console.resource/details-item",
     "properties": {
       "model": {
