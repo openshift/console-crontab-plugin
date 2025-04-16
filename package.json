@@ -76,7 +76,8 @@
     "description": "Sample plugin for the OpenShift Console. This plugin adds basic functionality that allows users to manage CronTab custom resources.",
     "exposedModules": {
       "CronTabList": "./views/CronTabList/CronTabList.tsx",
-      "yamlTemplates": "src/templates/index.ts"
+      "yamlTemplates": "src/templates/index.ts",
+      "CrontabForm": "./views/CrontabForm/CrontabForm.tsx"
     },
     "dependencies": {
       "@console/pluginAPI": "^4.11"

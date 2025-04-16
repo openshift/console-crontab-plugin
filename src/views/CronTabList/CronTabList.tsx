@@ -41,6 +41,7 @@ import {
   KEBAB_ACTION_DELETE_ID,
   KEBAB_BUTTON_ID,
 } from "./const";
+import CrontabForm from "./CrontabForm/CrontabForm";
 
 type CronTabListProps = {
   namespace: string;
@@ -66,13 +67,13 @@ const CronTabList: React.FC<CronTabListProps> = ({
   const { t } = useCronTabTranslation();
   const columns = useCronTabColumns();
   const [data, filteredData, onFilterChange] = useListPageFilter(cronTabs);
-
   return (
     <>
       <ListPageHeader title={showTitle ? t("CronTabs") : undefined}>
         <ListPageCreate groupVersionKind={cronTabGroupVersionKind}>
-          {t("Create CronTab")}
+          {t("Create CronTab (editor)")}
         </ListPageCreate>
+        <CrontabForm>{t("Create CronTab (form)")}</CrontabForm>
       </ListPageHeader>
       <ListPageBody>
         <ListPageFilter
