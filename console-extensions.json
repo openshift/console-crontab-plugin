@@ -72,7 +72,7 @@
         "version": "v1"
       },
       "component": {
-        "$codeRef": "CrontabForm"
+        "$codeRef": "FormPage"
       },
       "flags": {
         "required": ["CRONTAB"]
