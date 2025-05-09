@@ -3,8 +3,7 @@ import { CronTabKind } from "@crontab-model/types";
 import {
   K8sResourceCommon,
   ListPageBody,
-  // ListPageCreate,
-  // ListPageCreateButton,
+  ListPageCreate,
   ListPageFilter,
   ListPageHeader,
   Timestamp,
@@ -42,7 +41,6 @@ import {
   KEBAB_ACTION_DELETE_ID,
   KEBAB_BUTTON_ID,
 } from "./const";
-import { FormPage } from "./FormPage";
 
 type CronTabListProps = {
   namespace: string;
@@ -68,31 +66,20 @@ const CronTabList: React.FC<CronTabListProps> = ({
   const { t } = useCronTabTranslation();
   const columns = useCronTabColumns();
   const [data, filteredData, onFilterChange] = useListPageFilter(cronTabs);
+  const createAccessReview = {
+    groupVersionKind: cronTabGroupVersionKind,
+    namespace: namespace || "default",
+  };
+
   return (
     <>
       <ListPageHeader title={showTitle ? t("CronTabs") : undefined}>
-        {/* <ListPageCreate groupVersionKind={cronTabGroupVersionKind}>
-          {t("Create CronTab (editor)")}
-        </ListPageCreate> */}
-        <FormPage>{t("Create CronTab (form)")}</FormPage>
-        {/* <ListPageCreateButton
-          className="list-page-create-button-margin"
-          // createAccessReview={{
-          // groupVersionKind: modelToGroupVersionKind(RouteModel),
-          //   namespace,
-          // }}
-          onClick={() =>
-            navigate(
-              `${resourcePathFromModel(
-                RouteModel,
-                null,
-                namespace
-              )}/${SHARED_DEFAULT_PATH_NEW_RESOURCE_FORM}`
-            )
-          }
+        <ListPageCreate
+          createAccessReview={createAccessReview}
+          groupVersionKind={cronTabGroupVersionKind}
         >
-          {t("Create Route")}
-        </ListPageCreateButton> */}
+          {t("Create CronTab")}
+        </ListPageCreate>
       </ListPageHeader>
       <ListPageBody>
         <ListPageFilter
