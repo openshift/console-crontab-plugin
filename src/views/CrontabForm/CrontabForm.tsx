@@ -29,7 +29,7 @@ export const CronTabForm: React.FC = () => {
   const [name, setName] = useState("");
   const [cronSpec, setCronSpec] = useState("");
   const [image, setImage] = useState("");
-  const [replicas, setReplicas] = useState<number | string>(1); // Initialize as 1 or an empty string
+  const [replicas, setReplicas] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const history = useHistory();
