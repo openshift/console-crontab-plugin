@@ -47,7 +47,7 @@ export const CronTabForm: React.FC = () => {
       kind: CRONTAB_KIND,
       metadata: {
         name,
-        namespace: activeNamespace,
+        namespace,
       },
       spec: {
         cronSpec,
