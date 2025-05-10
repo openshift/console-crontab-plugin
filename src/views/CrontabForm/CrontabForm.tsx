@@ -59,7 +59,7 @@ export const CronTabForm: React.FC = () => {
     k8sCreate({ model, data })
       .then(() => {
         setLoading(false);
-        history.push(`/k8s/all-namespaces/stable.example.com~v1~CronTab`);
+       navigate(`/k8s/ns/${namespace}/${CRONTAB_API_GROUP}~${CRONTAB_API_VERSION}~${CRONTAB_KIND}`);
       })
       .catch((err) => {
         setLoading(false);
