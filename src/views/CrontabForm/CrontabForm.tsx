@@ -86,8 +86,8 @@ export const CronTabForm: React.FC = () => {
             <TextInput
               id="crontab-cronSpec"
               value={cronSpec || ""}
-              onChange={(e) =>
-                setCronSpec((e.target as HTMLInputElement).value)
+              onChange={(_e, value) =>
+                setCronSpec(value)
               }
               placeholder="e.g., */5 * * * *"
               isRequired
