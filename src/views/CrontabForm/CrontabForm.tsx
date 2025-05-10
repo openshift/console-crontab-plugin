@@ -109,8 +109,8 @@ export const CronTabForm: React.FC = () => {
               type="number"
               id="crontab-replicas"
               value={replicas}
-              onChange={(e) =>
-                setReplicas((e.target as HTMLInputElement).value)
+              onChange={(_e, value) =>
+                setReplicas(parseInt(value))
               }
               placeholder="Enter number of replicas"
               isRequired
