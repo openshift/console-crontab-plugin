@@ -42,7 +42,7 @@ export const CronTabForm: React.FC = () => {
     setLoading(true);
     setError("");
 
-    const data = {
+    const data: CronTabKind = {
       apiVersion: "stable.example.com/v1",
       kind: CRONTAB_KIND,
       metadata: {
