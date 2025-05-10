@@ -132,7 +132,7 @@ export const CronTabForm: React.FC = () => {
               variant="secondary"
               isDisabled={loading}
               onClick={(e) =>
-                navigate(`/k8s/all-namespaces/stable.example.com~v1~CronTab`)
+                navigate(-1)
               }
             >
               {t("console-app~Cancel")}
