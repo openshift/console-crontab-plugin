@@ -9,6 +9,7 @@ import {
   Title,
   Alert,
   Spinner,
+  NumberInput,
 } from "@patternfly/react-core";
 import { CRONTAB_APIGROUP, CRONTAB_APIVERSION, CRONTAB_KIND } from "src/const";
 import {
@@ -29,13 +30,60 @@ export const CronTabForm: React.FC = () => {
   const [name, setName] = useState("");
   const [cronSpec, setCronSpec] = useState("");
   const [image, setImage] = useState("");
-  const [replicas, setReplicas] = useState<number | string>(1); // Initialize as 1 or an empty string
+  const [replicas, setReplicas] = useState<number | "">(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const history = useHistory();
   const navigate = useNavigate();
   const { t } = useCronTabTranslation();
   const [activeNamespace] = useActiveNamespace();
+  const minValue = 1;
+  const maxValue = 10;
+
+  const normalizeBetween = (value: number, min: number, max: number) => {
+    if (min !== undefined && max !== undefined) {
+      return Math.max(Math.min(value, max), min);
+    }
+    return value;
+  };
+
+  const onReplicasChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const newValue =
+      event.currentTarget.value === ""
+        ? ""
+        : parseInt(event.currentTarget.value, 10);
+    setReplicas(newValue);
+  };
+
+  const onReplicasMinus = () => {
+    const newValue = normalizeBetween(
+      (replicas as number) - 1,
+      minValue,
+      maxValue
+    );
+    setReplicas(newValue);
+  };
+
+  const onReplicasPlus = () => {
+    const newValue = normalizeBetween(
+      (replicas as number) + 1,
+      minValue,
+      maxValue
+    );
+    setReplicas(newValue);
+  };
+
+  const onReplicasBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const blurVal = +event.target.value;
+
+    if (blurVal < minValue) {
+      setReplicas(minValue);
+    } else if (blurVal > maxValue) {
+      setReplicas(maxValue);
+    } else if (isNaN(blurVal)) {
+      setReplicas("");
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +126,7 @@ export const CronTabForm: React.FC = () => {
               onChange={(e) => setName((e.target as HTMLInputElement).value)}
               value={name || ""}
               placeholder="Enter CronTab name"
-              isRequired
+              required
             />
           </FormGroup>
 
@@ -105,15 +153,20 @@ export const CronTabForm: React.FC = () => {
           </FormGroup>
 
           <FormGroup label="Replicas" fieldId="crontab-replicas" isRequired>
-            <TextInput
-              type="number"
+            <NumberInput
               id="crontab-replicas"
               value={replicas}
-              onChange={(e) =>
-                setReplicas((e.target as HTMLInputElement).value)
-              }
-              placeholder="Enter number of replicas"
-              isRequired
+              min={minValue}
+              max={maxValue}
+              onChange={onReplicasChange}
+              onMinus={onReplicasMinus}
+              onPlus={onReplicasPlus}
+              onBlur={onReplicasBlur}
+              inputName="replicas"
+              inputAriaLabel="number of replicas"
+              minusBtnAriaLabel="decrease replicas"
+              plusBtnAriaLabel="increase replicas"
+              // isRequired
             />
           </FormGroup>
           {error && <Alert variant="danger" title={error} />}
