@@ -10,6 +10,9 @@ import {
   Alert,
   Spinner,
   NumberInput,
+  FormHelperText,
+  HelperText,
+  HelperTextItem,
 } from "@patternfly/react-core";
 import { CRONTAB_APIGROUP, CRONTAB_APIVERSION, CRONTAB_KIND } from "src/const";
 import {
@@ -125,9 +128,17 @@ export const CronTabForm: React.FC = () => {
               name="name"
               onChange={(e) => setName((e.target as HTMLInputElement).value)}
               value={name || ""}
-              placeholder="Enter CronTab name"
               required
             />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t(
+                    "console-app~A unique identifier for this CronTab within the project."
+                  )}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
           </FormGroup>
 
           <FormGroup label="CronSpec" fieldId="crontab-cronSpec" isRequired>
@@ -137,9 +148,17 @@ export const CronTabForm: React.FC = () => {
               onChange={(e) =>
                 setCronSpec((e.target as HTMLInputElement).value)
               }
-              placeholder="e.g., */5 * * * *"
-              isRequired
+              // isRequired
             />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t(
+                    "console-app~Defines the schedule on which the job will run (e.g., */5 * * * *)."
+                  )}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
           </FormGroup>
 
           <FormGroup label="Image" fieldId="crontab-image" isRequired>
@@ -147,9 +166,17 @@ export const CronTabForm: React.FC = () => {
               id="crontab-image"
               value={image || ""}
               onChange={(e) => setImage((e.target as HTMLInputElement).value)}
-              placeholder="Enter image name"
               isRequired
             />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t(
+                    "console-app~Specifies the container image to be executed by the CronTab."
+                  )}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
           </FormGroup>
 
           <FormGroup label="Replicas" fieldId="crontab-replicas" isRequired>
@@ -166,8 +193,16 @@ export const CronTabForm: React.FC = () => {
               inputAriaLabel="number of replicas"
               minusBtnAriaLabel="decrease replicas"
               plusBtnAriaLabel="increase replicas"
-              // isRequired
             />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t(
+                    "console-app~The desired number of instances of this CronTab to run."
+                  )}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
           </FormGroup>
           {error && <Alert variant="danger" title={error} />}
 
