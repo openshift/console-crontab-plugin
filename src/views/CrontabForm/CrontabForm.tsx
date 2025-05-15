@@ -110,7 +110,10 @@ export const CronTabForm: React.FC = () => {
     k8sCreate({ model, data })
       .then(() => {
         setLoading(false);
-        history.push(`/k8s/all-namespaces/stable.example.com~v1~CronTab`);
+        useActiveNamespace;
+        history.push(
+          `/k8s/ns/${activeNamespace}/stable.example.com~v1~CronTab`
+        );
       })
       .catch((err) => {
         setLoading(false);
@@ -220,7 +223,9 @@ export const CronTabForm: React.FC = () => {
               variant="secondary"
               isDisabled={loading}
               onClick={(e) =>
-                navigate(`/k8s/all-namespaces/stable.example.com~v1~CronTab`)
+                navigate(
+                  `/k8s/ns/${activeNamespace}/stable.example.com~v1~CronTab`
+                )
               }
             >
               {t("console-app~Cancel")}
