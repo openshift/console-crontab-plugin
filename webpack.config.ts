@@ -6,13 +6,13 @@ import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-serv
 import * as path from "path";
 import { ConsoleRemotePlugin } from "@openshift-console/dynamic-plugin-sdk-webpack";
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
 
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 const config: Configuration = {
   mode: "development",
@@ -25,9 +25,12 @@ const config: Configuration = {
     chunkFilename: "[name]-chunk.js",
   },
   resolve: {
-    modules: [path.join(__dirname, 'node_modules')],
+    modules: [path.join(__dirname, "node_modules")],
     extensions: [".ts", ".tsx", ".js", ".jsx"],
-    plugins: [new TsconfigPathsPlugin()]
+    plugins: [new TsconfigPathsPlugin()],
+    alias: {
+      src: path.resolve(__dirname, "src/"),
+    },
   },
   module: {
     rules: [
@@ -48,36 +51,36 @@ const config: Configuration = {
         exclude:
           /node_modules\/(?!(@patternfly|@openshift-console\/plugin-shared|@openshift-console\/dynamic-plugin-sdk)\/).*/,
         use: [
-          { loader: 'style-loader' },
+          { loader: "style-loader" },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'resolve-url-loader',
+            loader: "resolve-url-loader",
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: {
               sourceMap: true,
               sassOptions: {
-                outputStyle: 'compressed',
+                outputStyle: "compressed",
               },
             },
           },
         ],
       },
-      
+
       {
         test: /\.(png|jpg|jpeg|gif|svg|woff2?|ttf|eot|otf)(\?.*$|$)/,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: 'assets/[name].[ext]',
+          filename: "assets/[name].[ext]",
         },
       },
       {
@@ -92,11 +95,12 @@ const config: Configuration = {
     static: "./dist",
     port: 9001,
     // Allow bridge running in a container to connect to the plugin dev server.
-    allowedHosts: 'all',
+    allowedHosts: "all",
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-      "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization"
+      "Access-Control-Allow-Headers":
+        "X-Requested-With, Content-Type, Authorization",
     },
     devMiddleware: {
       writeToDisk: true,
@@ -105,7 +109,7 @@ const config: Configuration = {
   plugins: [
     new ConsoleRemotePlugin(),
     new CopyWebpackPlugin({
-      patterns: [{ from: path.resolve(__dirname, 'locales'), to: 'locales' }],
+      patterns: [{ from: path.resolve(__dirname, "locales"), to: "locales" }],
     }),
   ],
   devtool: "source-map",
