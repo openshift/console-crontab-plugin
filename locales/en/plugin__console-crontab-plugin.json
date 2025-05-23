@@ -1,15 +1,23 @@
 {
+  "A unique identifier for this CronTab within the project.": "A unique identifier for this CronTab within the project.",
   "Actions": "Actions",
+  "Cancel": "Cancel",
+  "Create": "Create",
   "Create CronTab": "Create CronTab",
+  "Create Form": "Create Form",
   "Created": "Created",
   "CronSpec": "CronSpec",
   "CronTabs": "CronTabs",
+  "Defines the schedule on which the job will run (e.g., */5 * * * *).": "Defines the schedule on which the job will run (e.g., */5 * * * *).",
   "Delete CronTab": "Delete CronTab",
   "Edit annotations": "Edit annotations",
   "Edit CronTab": "Edit CronTab",
   "Edit labels": "Edit labels",
+  "Error creating CronTab: {{err}}": "Error creating CronTab: {{err}}",
   "Image": "Image",
   "Name": "Name",
   "Namespace": "Namespace",
-  "Replicas": "Replicas"
+  "Replicas": "Replicas",
+  "Specifies the container image to be executed by the CronTab.": "Specifies the container image to be executed by the CronTab.",
+  "The desired number of instances of this CronTab to run.": "The desired number of instances of this CronTab to run."
 }
