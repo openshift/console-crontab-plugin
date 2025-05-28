@@ -63,6 +63,23 @@
     }
   },
   {
+    "type": "console.resource/create",
+    "properties": {
+      "name": "default",
+      "model": {
+        "group": "stable.example.com",
+        "kind": "CronTab",
+        "version": "v1"
+      },
+      "component": {
+        "$codeRef": "CronTabForm"
+      },
+      "flags": {
+        "required": ["CRONTAB"]
+      }
+    }
+  },
+  {
     "type": "console.resource/details-item",
     "properties": {
       "model": {
