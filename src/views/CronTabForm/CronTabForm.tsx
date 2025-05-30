@@ -100,7 +100,7 @@ export const CronTabForm: React.FC = () => {
             </HelperText>
           </FormHelperText>
         </FormGroup>
-        <FormGroup label={t("CronSpec")} fieldId="crontab-cronSpec" isRequired>
+        <FormGroup label={t("CronSpec")} fieldId="crontab-cronSpec">
           <TextInput
             id="crontab-cronSpec"
             value={cronSpec || ""}
@@ -116,12 +116,11 @@ export const CronTabForm: React.FC = () => {
             </HelperText>
           </FormHelperText>
         </FormGroup>
-        <FormGroup label={t("Image")} fieldId="crontab-image" isRequired>
+        <FormGroup label={t("Image")} fieldId="crontab-image">
           <TextInput
             id="crontab-image"
             value={image || ""}
             onChange={(_e, value) => setImage(value)}
-            isRequired
           />
           <FormHelperText>
             <HelperText>
@@ -133,7 +132,7 @@ export const CronTabForm: React.FC = () => {
             </HelperText>
           </FormHelperText>
         </FormGroup>
-        <FormGroup label={t("Replicas")} fieldId="crontab-replicas" isRequired>
+        <FormGroup label={t("Replicas")} fieldId="crontab-replicas">
           <NumberInput
             id="crontab-replicas"
             value={replicas}
