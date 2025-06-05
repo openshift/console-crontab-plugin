@@ -3,7 +3,7 @@ import { CronTabKind } from "@crontab-model/types";
 import {
   K8sResourceCommon,
   ListPageBody,
-  ListPageCreate,
+  ListPageCreateLink,
   ListPageFilter,
   ListPageHeader,
   Timestamp,
@@ -66,13 +66,24 @@ const CronTabList: React.FC<CronTabListProps> = ({
   const { t } = useCronTabTranslation();
   const columns = useCronTabColumns();
   const [data, filteredData, onFilterChange] = useListPageFilter(cronTabs);
+  const createAccessReview = {
+    groupVersionKind: cronTabGroupVersionKind,
+    namespace: namespace || "default",
+  };
+
+  const createURL = `/k8s/ns/${namespace || "default"}/${
+    cronTabGroupVersionKind.group
+  }~${cronTabGroupVersionKind.version}~${cronTabGroupVersionKind.kind}/~new`;
 
   return (
     <>
       <ListPageHeader title={showTitle ? t("CronTabs") : undefined}>
-        <ListPageCreate groupVersionKind={cronTabGroupVersionKind}>
+        <ListPageCreateLink
+          to={createURL}
+          createAccessReview={createAccessReview}
+        >
           {t("Create CronTab")}
-        </ListPageCreate>
+        </ListPageCreateLink>
       </ListPageHeader>
       <ListPageBody>
         <ListPageFilter

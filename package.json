@@ -56,6 +56,7 @@
     "react-i18next": "^11.8.11",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "react-router-dom-v5-compat": "^6.22.2",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.58.0",
     "sass-loader": "^13.2.0",
@@ -76,7 +77,8 @@
     "description": "Sample plugin for the OpenShift Console. This plugin adds basic functionality that allows users to manage CronTab custom resources.",
     "exposedModules": {
       "CronTabList": "./views/CronTabList/CronTabList.tsx",
-      "yamlTemplates": "src/templates/index.ts"
+      "yamlTemplates": "src/templates/index.ts",
+      "CronTabForm": "src/views/CronTabForm/CronTabForm.tsx"
     },
     "dependencies": {
       "@console/pluginAPI": "^4.11"
