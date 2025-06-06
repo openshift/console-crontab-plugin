@@ -21,9 +21,9 @@
     "@cypress/webpack-preprocessor": "^6.0.0",
     "@openshift-console/dynamic-plugin-sdk": "^1.0.0",
     "@openshift-console/dynamic-plugin-sdk-webpack": "^1.0.0",
-    "@patternfly/react-core": "^6.2.0-prerelease.15",
-    "@patternfly/react-icons": "^6.2.0-prerelease.2",
-    "@patternfly/react-table": "^6.2.0-prerelease.16",
+    "@patternfly/react-core": "6.2.0",
+    "@patternfly/react-icons": "6.2.0",
+    "@patternfly/react-table": "6.2.0",
     "@types/node": "^16.11.6",
     "@types/react": "^17.0.34",
     "@types/react-helmet": "^6.1.4",
@@ -86,7 +86,12 @@
   },
   "resolutions": {
     "webpack": "^5.68.0",
-    "@types/react": "17.0.40"
+    "@types/react": "17.0.40",
+    "@patternfly/react-core": "6.2.0",
+    "@patternfly/react-icons": "6.2.0",
+    "@patternfly/react-table": "6.2.0",
+    "@patternfly/react-styles": "6.2.0",
+    "@patternfly/react-tokens": "6.2.0"
   },
   "dependencies": {
     "react-tagsinput": "^3.20.0"

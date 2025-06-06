@@ -7,6 +7,7 @@ import { labelsModal } from "../views/labels-modal";
 import { annotationModal } from "../views/annotations-modal";
 import { detailsPage } from "../views/details-page";
 import { nav } from "../views/nav";
+import { guidedTour } from "../views/guided-tour";
 
 const cronTabName = "my-new-cron-object";
 const testLabel = "key1=value1";
@@ -20,6 +21,7 @@ const annotations = [
 describe(`${PLUGIN_NAME}`, () => {
   before(() => {
     cy.login();
+    guidedTour.close();
     setup();
     cy.createProject(testName);
   });
