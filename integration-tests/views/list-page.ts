@@ -1,5 +1,5 @@
 export const listPage = {
-  clickCreateYAMLbutton: () => {
+  clickCreateForm: () => {
     cy.byTestID("item-create").click();
   },
   rows: {
