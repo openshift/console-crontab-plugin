@@ -47,9 +47,9 @@ describe(`${PLUGIN_NAME}`, () => {
     cy.log("Create CronTab");
     nav.sidenav.clickNavLink(["Workloads", "CronTabs"]);
     common.resourceTitleShouldHaveText("CronTabs");
-    listPage.clickCreateYAMLbutton();
+    listPage.clickCreateForm();
     cy.get('[data-test="page-heading"] h1').should("contain", "Create CronTab");
-    cy.byTestID("save-changes").click();
+    cy.byTestID('[data-test="save-changes"]').click();
     common.inlineDangerAlert().should("not.exist");
     common.resourceTitleShouldHaveText(cronTabName);
 
