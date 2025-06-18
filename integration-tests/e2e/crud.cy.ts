@@ -10,6 +10,9 @@ import { nav } from "../views/nav";
 import { guidedTour } from "../views/guided-tour";
 
 const cronTabName = "my-new-cron-object";
+const cronSpecValue = "* * * * */5";
+const imageValue = "my-awesome-cron-image";
+const replicasValue = 1;
 const testLabel = "key1=value1";
 const annotations = [
   {
@@ -47,8 +50,14 @@ describe(`${PLUGIN_NAME}`, () => {
     cy.log("Create CronTab");
     nav.sidenav.clickNavLink(["Workloads", "CronTabs"]);
     common.resourceTitleShouldHaveText("CronTabs");
-    listPage.clickCreateYAMLbutton();
-    cy.get('[data-test="page-heading"] h1').should("contain", "Create CronTab");
+    listPage.clickCreateForm();
+    cy.byTestID("page-heading").should("contain", "Create CronTab");
+    cy.log("Filling CronTab form");
+    cy.byTestID("crontab-name").type(cronTabName);
+    cy.byTestID("crontab-cronSpec").type(cronSpecValue);
+    cy.byTestID("crontab-image").type(imageValue);
+    cy.byTestID("crontab-replicas").find("input").clear();
+    cy.byTestID("crontab-replicas").find("input").type(`${replicasValue}`);
     cy.byTestID("save-changes").click();
     common.inlineDangerAlert().should("not.exist");
     common.resourceTitleShouldHaveText(cronTabName);

@@ -29,13 +29,17 @@ export const CronTabForm: React.FC = () => {
   const [name, setName] = useState("");
   const [cronSpec, setCronSpec] = useState("");
   const [image, setImage] = useState("");
-  const [replicas, setReplicas] = useState<number>();
+  const [replicas, setReplicas] = useState<number | "">(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { t } = useCronTabTranslation();
   const [namespace] = useActiveNamespace();
 
+  const onChangeReplicas = (event: React.FormEvent<HTMLInputElement>) => {
+    const value = (event.target as HTMLInputElement).value;
+    setReplicas(value === "" ? value : +value);
+  };
   const onReplicasMinus = () => {
     setReplicas((currentReplicas) => (currentReplicas || 0) - 1);
   };
@@ -58,14 +62,14 @@ export const CronTabForm: React.FC = () => {
       spec: {
         cronSpec,
         image,
-        replicas,
+        replicas: replicas ? replicas : 0,
       },
     };
 
     k8sCreate({ model, data })
       .then(() => {
         setLoading(false);
-        navigate(`/k8s/ns/${namespace}/stable.example.com~v1~CronTab`);
+        navigate(`/k8s/ns/${namespace}/stable.example.com~v1~CronTab/${name}`);
       })
       .catch((err) => {
         setLoading(false);
@@ -74,11 +78,14 @@ export const CronTabForm: React.FC = () => {
   };
   return (
     <PageSection>
-      <Title headingLevel="h1">{t("Create CronTab")}</Title>
+      <Title headingLevel="h1" data-test="page-heading">
+        {t("Create CronTab")}
+      </Title>
       <Form>
         <FormGroup label={t("Name")} fieldId="crontab-name" isRequired>
           <TextInput
             id="crontab-name"
+            data-test="crontab-name"
             name="name"
             onChange={(_e, value) => setName(value)}
             value={name}
@@ -95,6 +102,7 @@ export const CronTabForm: React.FC = () => {
         <FormGroup label={t("CronSpec")} fieldId="crontab-cronSpec" isRequired>
           <TextInput
             id="crontab-cronSpec"
+            data-test="crontab-cronSpec"
             value={cronSpec || ""}
             onChange={(_e, value) => setCronSpec(value)}
             required
@@ -112,6 +120,7 @@ export const CronTabForm: React.FC = () => {
         <FormGroup label={t("Image")} fieldId="crontab-image" isRequired>
           <TextInput
             id="crontab-image"
+            data-test="crontab-image"
             value={image || ""}
             onChange={(_e, value) => setImage(value)}
             required
@@ -129,14 +138,17 @@ export const CronTabForm: React.FC = () => {
         <FormGroup label={t("Replicas")} fieldId="crontab-replicas" isRequired>
           <NumberInput
             id="crontab-replicas"
+            data-test="crontab-replicas"
             value={replicas}
+            onChange={onChangeReplicas}
             onMinus={onReplicasMinus}
             onPlus={onReplicasPlus}
-            inputName="replicas"
-            inputAriaLabel="number of replicas"
-            minusBtnAriaLabel="decrease replicas"
-            plusBtnAriaLabel="increase replicas"
+            inputName={t("replicas")}
+            inputAriaLabel={t("Number of replicas")}
+            minusBtnAriaLabel={t("Decrease replicas")}
+            plusBtnAriaLabel={t("Increase replicas")}
             required
+            min={0}
           />
           <FormHelperText>
             <HelperText>
@@ -154,6 +166,7 @@ export const CronTabForm: React.FC = () => {
             isDisabled={loading || !name || !cronSpec || !image}
             onClick={handleSubmit}
             isLoading={loading}
+            data-test="save-changes"
           >
             {t("Create")}
           </Button>
