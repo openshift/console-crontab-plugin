@@ -15,10 +15,11 @@
   "Edit labels": "Edit labels",
   "Error creating CronTab: {{err}}": "Error creating CronTab: {{err}}",
   "Image": "Image",
-  "increase replicas": "increase replicas",
+  "Increase replicas": "Increase replicas",
   "Name": "Name",
   "Namespace": "Namespace",
   "Number of replicas": "Number of replicas",
+  "replicas": "replicas",
   "Replicas": "Replicas",
   "Specifies the container image to be executed by the CronTab.": "Specifies the container image to be executed by the CronTab.",
   "The desired number of instances of this CronTab to run.": "The desired number of instances of this CronTab to run."
