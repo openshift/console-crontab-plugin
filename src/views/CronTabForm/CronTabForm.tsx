@@ -6,7 +6,6 @@ import {
   ActionGroup,
   Button,
   PageSection,
-  Title,
   Alert,
   NumberInput,
   FormHelperText,
@@ -18,7 +17,7 @@ import {
   useK8sModel,
   k8sCreate,
   useActiveNamespace,
-  YAMLEditor,
+  CodeEditor,
 } from "@openshift-console/dynamic-plugin-sdk";
 import { useNavigate } from "react-router-dom-v5-compat";
 import { useCronTabTranslation } from "@crontab-utils/hooks/useCronTabTranslation";
@@ -26,6 +25,10 @@ import { cronTabGroupVersionKind } from "src/utils/utils";
 import { CronTabKind } from "@crontab-model/types";
 import yaml from "js-yaml";
 import { defaultCronTabYamlTemplate } from "src/templates/crontab-yaml";
+import {
+  PageHeader,
+  PageHeaderLinkProps,
+} from "@patternfly/react-component-groups";
 
 export const CronTabForm: React.FC = () => {
   const [model] = useK8sModel(cronTabGroupVersionKind);
@@ -136,22 +139,25 @@ export const CronTabForm: React.FC = () => {
   };
 
   return (
-    <PageSection>
-      <Title headingLevel="h1" data-test="page-heading">
-        {t("Create CronTab")}
-      </Title>
-      <Button variant="link" onClick={() => setShowYaml(!showYaml)}>
-        {showYaml ? t("Form View") : t("YAML Editor")}
-      </Button>
+    <PageSection isFilled={true} height="sizeToFit">
+      <PageHeader
+        title={t("Create CronTab")}
+        linkProps={
+          {
+            label: showYaml ? t("Form View") : t("YAML Editor"),
+            onClick: () => setShowYaml(!showYaml),
+          } as PageHeaderLinkProps
+        }
+      />
 
       {showYaml ? (
         <>
-          <YAMLEditor
+          <CodeEditor
             value={yamlContent}
-            language="yaml"
-            onChange={(_e, val) => setYamlContent(val as string)}
-            minHeight="0"
+            onChange={(val) => setYamlContent(val)}
+            // @ts-expect-error TODO: fix this
             height="500px"
+            language="yaml"
             options={{
               wordWrap: "on",
               formatOnPaste: true,
