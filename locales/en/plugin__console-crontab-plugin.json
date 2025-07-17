@@ -13,6 +13,7 @@
   "Edit annotations": "Edit annotations",
   "Edit CronTab": "Edit CronTab",
   "Edit labels": "Edit labels",
+  "Edit YAML": "Edit YAML",
   "Error creating CronTab: {{err}}": "Error creating CronTab: {{err}}",
   "Image": "Image",
   "Increase replicas": "Increase replicas",

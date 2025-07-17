@@ -63,20 +63,13 @@
     }
   },
   {
-    "type": "console.resource/create",
+    "type": "console.page/route",
     "properties": {
-      "name": "default",
-      "model": {
-        "group": "stable.example.com",
-        "kind": "CronTab",
-        "version": "v1"
-      },
+      "path": "/k8s/ns/:ns/stable.example.com~v1~CronTab/~new/form",
       "component": {
         "$codeRef": "CronTabForm"
       },
-      "flags": {
-        "required": ["CRONTAB"]
-      }
+      "exact": true
     }
   },
   {

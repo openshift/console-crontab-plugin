@@ -17,18 +17,12 @@ import {
   useK8sModel,
   k8sCreate,
   useActiveNamespace,
-  CodeEditor,
 } from "@openshift-console/dynamic-plugin-sdk";
 import { useNavigate } from "react-router-dom-v5-compat";
 import { useCronTabTranslation } from "@crontab-utils/hooks/useCronTabTranslation";
 import { cronTabGroupVersionKind } from "src/utils/utils";
 import { CronTabKind } from "@crontab-model/types";
-import yaml from "js-yaml";
-import { defaultCronTabYamlTemplate } from "src/templates/crontab-yaml";
-import {
-  PageHeader,
-  PageHeaderLinkProps,
-} from "@patternfly/react-component-groups";
+import { PageHeader } from "@patternfly/react-component-groups";
 
 export const CronTabForm: React.FC = () => {
   const [model] = useK8sModel(cronTabGroupVersionKind);
@@ -38,10 +32,6 @@ export const CronTabForm: React.FC = () => {
   const [replicas, setReplicas] = useState<number | "">(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showYaml, setShowYaml] = useState(false);
-  const [yamlContent, setYamlContent] = useState<string>(
-    defaultCronTabYamlTemplate.trim()
-  );
   const navigate = useNavigate();
   const { t } = useCronTabTranslation();
   const [namespace] = useActiveNamespace();
@@ -87,105 +77,23 @@ export const CronTabForm: React.FC = () => {
       });
   };
 
-  const handleYamlSubmit = () => {
-    setLoading(true);
-    setError("");
-    try {
-      const loaded = yaml.load(yamlContent) as Partial<CronTabKind> | undefined;
-      if (
-        !loaded ||
-        !loaded.metadata ||
-        !(loaded.metadata.name || loaded.metadata.generateName)
-      ) {
-        throw new Error(
-          t("YAML must include metadata.name or metadata.generateName")
-        );
-      }
-      if (!loaded.spec) {
-        throw new Error(t("YAML must include spec"));
-      }
-
-      const data: CronTabKind = {
-        apiVersion: (loaded.apiVersion as string) || CRONTAB_APIGROUP_VERSION,
-        kind: (loaded.kind as string) || CRONTAB_KIND,
-        metadata: {
-          ...loaded.metadata,
-          namespace,
-        },
-        spec: {
-          cronSpec,
-          image,
-          replicas: replicas ? replicas : 0,
-        },
-      };
-
-      k8sCreate({ model, data })
-        .then(() => {
-          setLoading(false);
-          navigate(
-            `/k8s/ns/${namespace}/${cronTabGroupVersionKind.group}~${cronTabGroupVersionKind.version}~${cronTabGroupVersionKind.kind}`
-          );
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError(
-            t("Error creating CronTab: {{err}}", { err: err.toString() })
-          );
-        });
-    } catch (err) {
-      setLoading(false);
-      setError(t("Invalid YAML: {{err}}", { err: (err as Error).message }));
-    }
-  };
-
   return (
-    <PageSection isFilled={true} height="sizeToFit">
-      <PageHeader
-        title={t("Create CronTab")}
-        linkProps={
-          {
-            label: showYaml ? t("Form View") : t("YAML Editor"),
-            onClick: () => setShowYaml(!showYaml),
-          } as PageHeaderLinkProps
-        }
-      />
-
-      {showYaml ? (
-        <>
-          <CodeEditor
-            value={yamlContent}
-            onChange={(val) => setYamlContent(val)}
-            // @ts-expect-error TODO: fix this
-            height="500px"
-            language="yaml"
-            options={{
-              wordWrap: "on",
-              formatOnPaste: true,
-            }}
-          />
-          {error && <Alert variant="danger" title={error} />}
-          <ActionGroup>
-            <Button
-              type="button"
-              style={{ marginTop: "2rem", marginRight: "0.5rem" }}
-              variant="primary"
-              isDisabled={loading}
-              onClick={handleYamlSubmit}
-              isLoading={loading}
-            >
-              {t("Create")}
-            </Button>
-            <Button
-              variant="secondary"
-              style={{ marginTop: "2rem", marginLeft: "0.5rem" }}
-              onClick={() => navigate(-1)}
-              isDisabled={loading}
-            >
-              {t("Cancel")}
-            </Button>
-          </ActionGroup>
-        </>
-      ) : (
+    <>
+      <div data-test="page-heading">
+        <PageHeader
+          title={t("Create CronTab")}
+          linkProps={{
+            label: t("Edit YAML"),
+            onClick: (e) => {
+              e.preventDefault();
+              navigate(
+                `/k8s/ns/${namespace}/${cronTabGroupVersionKind.group}~${cronTabGroupVersionKind.version}~${cronTabGroupVersionKind.kind}/~new`
+              );
+            },
+          }}
+        />
+      </div>
+      <PageSection isFilled={true} height="sizeToFit">
         <Form>
           <FormGroup label={t("Name")} fieldId="crontab-name" isRequired>
             <TextInput
@@ -206,11 +114,7 @@ export const CronTabForm: React.FC = () => {
               </HelperText>
             </FormHelperText>
           </FormGroup>
-          <FormGroup
-            label={t("CronSpec")}
-            fieldId="crontab-cronSpec"
-            isRequired
-          >
+          <FormGroup label={t("CronSpec")} fieldId="crontab-cronSpec">
             <TextInput
               id="crontab-cronSpec"
               data-test="crontab-cronSpec"
@@ -234,7 +138,6 @@ export const CronTabForm: React.FC = () => {
               data-test="crontab-image"
               value={image || ""}
               onChange={(_e, value) => setImage(value)}
-              required
             />
             <FormHelperText>
               <HelperText>
@@ -294,8 +197,8 @@ export const CronTabForm: React.FC = () => {
             </Button>
           </ActionGroup>
         </Form>
-      )}
-    </PageSection>
+      </PageSection>
+    </>
   );
 };
 

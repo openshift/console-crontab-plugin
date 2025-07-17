@@ -51,7 +51,7 @@ describe(`${PLUGIN_NAME}`, () => {
     nav.sidenav.clickNavLink(["Workloads", "CronTabs"]);
     common.resourceTitleShouldHaveText("CronTabs");
     listPage.clickCreateForm();
-    cy.byTestID("page-heading").should("contain", "Create CronTab");
+    cy.byTestID("page-heading").should("include.text", "Create CronTab");
     cy.log("Filling CronTab form");
     cy.byTestID("crontab-name").type(cronTabName);
     cy.byTestID("crontab-cronSpec").type(cronSpecValue);

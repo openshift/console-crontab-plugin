@@ -73,7 +73,9 @@ const CronTabList: React.FC<CronTabListProps> = ({
 
   const createURL = `/k8s/ns/${namespace || "default"}/${
     cronTabGroupVersionKind.group
-  }~${cronTabGroupVersionKind.version}~${cronTabGroupVersionKind.kind}/~new`;
+  }~${cronTabGroupVersionKind.version}~${
+    cronTabGroupVersionKind.kind
+  }/~new/form`;
 
   return (
     <>
