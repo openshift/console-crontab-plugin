@@ -18,8 +18,11 @@ export const installHelmChart = (path: string) => {
     result.stdout &&
       cy.log("Successfully installed helm chart: ", result.stdout);
   });
-  cy.byTestID("refresh-web-console", { timeout: 300000 }).should("exist");
-  cy.reload();
+  cy.visit(
+    "/k8s/cluster/operator.openshift.io~v1~Console/cluster/console-plugins"
+  );
+  cy.byTestID("console-plugins-table").should("exist");
+  cy.byTestID("console-crontab-plugin-status").should("include.text", "Loaded");
 };
 
 export const deleteHelmChart = (path: string) => {
