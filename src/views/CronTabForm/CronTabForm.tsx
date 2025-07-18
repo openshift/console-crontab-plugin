@@ -6,7 +6,6 @@ import {
   ActionGroup,
   Button,
   PageSection,
-  Title,
   Alert,
   NumberInput,
   FormHelperText,
@@ -23,6 +22,7 @@ import { useNavigate } from "react-router-dom-v5-compat";
 import { useCronTabTranslation } from "@crontab-utils/hooks/useCronTabTranslation";
 import { cronTabGroupVersionKind } from "src/utils/utils";
 import { CronTabKind } from "@crontab-model/types";
+import { PageHeader } from "@patternfly/react-component-groups";
 
 export const CronTabForm: React.FC = () => {
   const [model] = useK8sModel(cronTabGroupVersionKind);
@@ -76,110 +76,129 @@ export const CronTabForm: React.FC = () => {
         setError(t("Error creating CronTab: {{err}}", { err: err.toString() }));
       });
   };
+
   return (
-    <PageSection>
-      <Title headingLevel="h1" data-test="page-heading">
-        {t("Create CronTab")}
-      </Title>
-      <Form>
-        <FormGroup label={t("Name")} fieldId="crontab-name" isRequired>
-          <TextInput
-            id="crontab-name"
-            data-test="crontab-name"
-            name="name"
-            onChange={(_e, value) => setName(value)}
-            value={name}
-            required
-          />
-          <FormHelperText>
-            <HelperText>
-              <HelperTextItem>
-                {t("A unique identifier for this CronTab within the project.")}
-              </HelperTextItem>
-            </HelperText>
-          </FormHelperText>
-        </FormGroup>
-        <FormGroup label={t("CronSpec")} fieldId="crontab-cronSpec" isRequired>
-          <TextInput
-            id="crontab-cronSpec"
-            data-test="crontab-cronSpec"
-            value={cronSpec || ""}
-            onChange={(_e, value) => setCronSpec(value)}
-            required
-          />
-          <FormHelperText>
-            <HelperText>
-              <HelperTextItem>
-                {t(
-                  "Defines the schedule on which the job will run (e.g., */5 * * * *)."
-                )}
-              </HelperTextItem>
-            </HelperText>
-          </FormHelperText>
-        </FormGroup>
-        <FormGroup label={t("Image")} fieldId="crontab-image" isRequired>
-          <TextInput
-            id="crontab-image"
-            data-test="crontab-image"
-            value={image || ""}
-            onChange={(_e, value) => setImage(value)}
-            required
-          />
-          <FormHelperText>
-            <HelperText>
-              <HelperTextItem>
-                {t(
-                  "Specifies the container image to be executed by the CronTab."
-                )}
-              </HelperTextItem>
-            </HelperText>
-          </FormHelperText>
-        </FormGroup>
-        <FormGroup label={t("Replicas")} fieldId="crontab-replicas" isRequired>
-          <NumberInput
-            id="crontab-replicas"
-            data-test="crontab-replicas"
-            value={replicas}
-            onChange={onChangeReplicas}
-            onMinus={onReplicasMinus}
-            onPlus={onReplicasPlus}
-            inputName={t("replicas")}
-            inputAriaLabel={t("Number of replicas")}
-            minusBtnAriaLabel={t("Decrease replicas")}
-            plusBtnAriaLabel={t("Increase replicas")}
-            required
-            min={0}
-          />
-          <FormHelperText>
-            <HelperText>
-              <HelperTextItem>
-                {t("The desired number of instances of this CronTab to run.")}
-              </HelperTextItem>
-            </HelperText>
-          </FormHelperText>
-        </FormGroup>
-        {error && <Alert variant="danger" title={error} />}
-        <ActionGroup>
-          <Button
-            type="button"
-            variant="primary"
-            isDisabled={loading || !name || !cronSpec || !image}
-            onClick={handleSubmit}
-            isLoading={loading}
-            data-test="save-changes"
+    <>
+      <div data-test="page-heading">
+        <PageHeader
+          title={t("Create CronTab")}
+          linkProps={{
+            label: t("Edit YAML"),
+            onClick: (e) => {
+              e.preventDefault();
+              navigate(
+                `/k8s/ns/${namespace}/${cronTabGroupVersionKind.group}~${cronTabGroupVersionKind.version}~${cronTabGroupVersionKind.kind}/~new`
+              );
+            },
+          }}
+        />
+      </div>
+      <PageSection isFilled={true} height="sizeToFit">
+        <Form>
+          <FormGroup label={t("Name")} fieldId="crontab-name" isRequired>
+            <TextInput
+              id="crontab-name"
+              data-test="crontab-name"
+              name="name"
+              onChange={(_e, value) => setName(value)}
+              value={name}
+              required
+            />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t(
+                    "A unique identifier for this CronTab within the project."
+                  )}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
+          </FormGroup>
+          <FormGroup label={t("CronSpec")} fieldId="crontab-cronSpec">
+            <TextInput
+              id="crontab-cronSpec"
+              data-test="crontab-cronSpec"
+              value={cronSpec || ""}
+              onChange={(_e, value) => setCronSpec(value)}
+              required
+            />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t(
+                    "Defines the schedule on which the job will run (e.g., */5 * * * *)."
+                  )}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
+          </FormGroup>
+          <FormGroup label={t("Image")} fieldId="crontab-image" isRequired>
+            <TextInput
+              id="crontab-image"
+              data-test="crontab-image"
+              value={image || ""}
+              onChange={(_e, value) => setImage(value)}
+            />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t(
+                    "Specifies the container image to be executed by the CronTab."
+                  )}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
+          </FormGroup>
+          <FormGroup
+            label={t("Replicas")}
+            fieldId="crontab-replicas"
+            isRequired
           >
-            {t("Create")}
-          </Button>
-          <Button
-            variant="secondary"
-            isDisabled={loading}
-            onClick={() => navigate(-1)}
-          >
-            {t("Cancel")}
-          </Button>
-        </ActionGroup>
-      </Form>
-    </PageSection>
+            <NumberInput
+              id="crontab-replicas"
+              data-test="crontab-replicas"
+              value={replicas}
+              onChange={onChangeReplicas}
+              onMinus={onReplicasMinus}
+              onPlus={onReplicasPlus}
+              inputName={t("replicas")}
+              inputAriaLabel={t("Number of replicas")}
+              minusBtnAriaLabel={t("Decrease replicas")}
+              plusBtnAriaLabel={t("Increase replicas")}
+              required
+              min={0}
+            />
+            <FormHelperText>
+              <HelperText>
+                <HelperTextItem>
+                  {t("The desired number of instances of this CronTab to run.")}
+                </HelperTextItem>
+              </HelperText>
+            </FormHelperText>
+          </FormGroup>
+          {error && <Alert variant="danger" title={error} />}
+          <ActionGroup>
+            <Button
+              type="button"
+              variant="primary"
+              isDisabled={loading || !name || !cronSpec || !image}
+              onClick={handleSubmit}
+              isLoading={loading}
+              data-test="save-changes"
+            >
+              {t("Create")}
+            </Button>
+            <Button
+              variant="secondary"
+              isDisabled={loading}
+              onClick={() => navigate(-1)}
+            >
+              {t("Cancel")}
+            </Button>
+          </ActionGroup>
+        </Form>
+      </PageSection>
+    </>
   );
 };
 

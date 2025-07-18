@@ -88,12 +88,14 @@
     "webpack": "^5.68.0",
     "@types/react": "17.0.40",
     "@patternfly/react-core": "6.2.0",
+    "@patternfly/react-component-groups": "^6.2.1",
     "@patternfly/react-icons": "6.2.0",
     "@patternfly/react-table": "6.2.0",
     "@patternfly/react-styles": "6.2.0",
     "@patternfly/react-tokens": "6.2.0"
   },
   "dependencies": {
-    "react-tagsinput": "^3.20.0"
+    "react-tagsinput": "^3.20.0",
+    "@patternfly/react-component-groups": "^6.2.1"
   }
 }
