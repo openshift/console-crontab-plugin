@@ -23,10 +23,10 @@
         "group": "stable.example.com",
         "kind": "CronTab",
         "version": "v1"
-      },
-      "flags": {
-        "required": ["CRONTAB"]
       }
+    },
+    "flags": {
+      "required": ["CRONTAB"]
     }
   },
   {
@@ -39,10 +39,10 @@
       },
       "component": {
         "$codeRef": "CronTabList"
-      },
-      "flags": {
-        "required": ["CRONTAB"]
       }
+    },
+    "flags": {
+      "required": ["CRONTAB"]
     }
   },
   {
@@ -56,10 +56,10 @@
       },
       "template": {
         "$codeRef": "yamlTemplates.defaultCronTabYamlTemplate"
-      },
-      "flags": {
-        "required": ["CRONTAB"]
       }
+    },
+    "flags": {
+      "required": ["CRONTAB"]
     }
   },
   {
@@ -73,10 +73,10 @@
       },
       "component": {
         "$codeRef": "CronTabForm"
-      },
-      "flags": {
-        "required": ["CRONTAB"]
       }
+    },
+    "flags": {
+      "required": ["CRONTAB"]
     }
   },
   {
