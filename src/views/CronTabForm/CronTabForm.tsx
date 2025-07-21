@@ -17,12 +17,12 @@ import {
   useK8sModel,
   k8sCreate,
   useActiveNamespace,
+  ListPageHeader,
 } from "@openshift-console/dynamic-plugin-sdk";
-import { useNavigate } from "react-router-dom-v5-compat";
+import { Link, useNavigate } from "react-router-dom-v5-compat";
 import { useCronTabTranslation } from "@crontab-utils/hooks/useCronTabTranslation";
 import { cronTabGroupVersionKind } from "src/utils/utils";
 import { CronTabKind } from "@crontab-model/types";
-import { PageHeader } from "@patternfly/react-component-groups";
 
 export const CronTabForm: React.FC = () => {
   const [model] = useK8sModel(cronTabGroupVersionKind);
@@ -80,17 +80,15 @@ export const CronTabForm: React.FC = () => {
   return (
     <>
       <div data-test="page-heading">
-        <PageHeader
+        <ListPageHeader
           title={t("Create CronTab")}
-          linkProps={{
-            label: t("Edit YAML"),
-            onClick: (e) => {
-              e.preventDefault();
-              navigate(
-                `/k8s/ns/${namespace}/${cronTabGroupVersionKind.group}~${cronTabGroupVersionKind.version}~${cronTabGroupVersionKind.kind}/~new`
-              );
-            },
-          }}
+          helpText={
+            <Link
+              to={`/k8s/ns/${namespace}/${cronTabGroupVersionKind.group}~${cronTabGroupVersionKind.version}~${cronTabGroupVersionKind.kind}/~new`}
+            >
+              {t("Edit YAML")}
+            </Link>
+          }
         />
       </div>
       <PageSection isFilled={true} height="sizeToFit">
