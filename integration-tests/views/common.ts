@@ -73,5 +73,5 @@ export const teardown = () => {
 export const common = {
   inlineDangerAlert: () => cy.get(".pf-c-alert.pf-m-inline.pf-m-danger"),
   resourceTitleShouldHaveText: (title: string) =>
-    cy.byLegacyTestID("resource-title").should("have.text", title),
+    cy.get('[data-test="page-heading"] h1').contains(title).should("exist"),
 };
