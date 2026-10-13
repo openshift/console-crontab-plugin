@@ -7,6 +7,7 @@ npm_package_consolePlugin_name="console-crontab-plugin"
 CONSOLE_IMAGE=${CONSOLE_IMAGE:="quay.io/openshift/origin-console:latest"}
 CONSOLE_PORT=${CONSOLE_PORT:=9000}
 CONSOLE_IMAGE_PLATFORM=${CONSOLE_IMAGE_PLATFORM:="linux/amd64"}
+CONSOLE_IMAGE_PULL_POLICY=${CONSOLE_IMAGE_PULL_POLICY:="always"}
 
 echo "Starting local OpenShift console..."
 
@@ -36,12 +37,12 @@ if [ -x "$(command -v podman)" ]; then
     if [ "$(uname -s)" = "Linux" ]; then
         # Use host networking on Linux since host.containers.internal is unreachable in some environments.
         BRIDGE_PLUGINS="${npm_package_consolePlugin_name}=http://localhost:9001"
-        podman run --pull always --platform $CONSOLE_IMAGE_PLATFORM --rm --network=host --env-file <(set | grep BRIDGE) $CONSOLE_IMAGE
+        podman run --pull "$CONSOLE_IMAGE_PULL_POLICY" --platform "$CONSOLE_IMAGE_PLATFORM" --rm --network=host --env-file <(set | grep BRIDGE) "$CONSOLE_IMAGE"
     else
         BRIDGE_PLUGINS="${npm_package_consolePlugin_name}=http://host.containers.internal:9001"
-        podman run --pull always --platform $CONSOLE_IMAGE_PLATFORM --rm -p "$CONSOLE_PORT":9000 --env-file <(set | grep BRIDGE) $CONSOLE_IMAGE
+        podman run --pull "$CONSOLE_IMAGE_PULL_POLICY" --platform "$CONSOLE_IMAGE_PLATFORM" --rm -p "$CONSOLE_PORT":9000 --env-file <(set | grep BRIDGE) "$CONSOLE_IMAGE"
     fi
 else
     BRIDGE_PLUGINS="${npm_package_consolePlugin_name}=http://host.docker.internal:9001"
-    docker run --pull always --platform $CONSOLE_IMAGE_PLATFORM --rm -p "$CONSOLE_PORT":9000 --env-file <(set | grep BRIDGE) $CONSOLE_IMAGE
+    docker run --pull "$CONSOLE_IMAGE_PULL_POLICY" --platform "$CONSOLE_IMAGE_PLATFORM" --rm -p "$CONSOLE_PORT":9000 --env-file <(set | grep BRIDGE) "$CONSOLE_IMAGE"
 fi
