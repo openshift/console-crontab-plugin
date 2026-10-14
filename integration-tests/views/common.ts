@@ -21,7 +21,12 @@ export const installHelmChart = (path: string) => {
   cy.visit(
     "/k8s/cluster/operator.openshift.io~v1~Console/cluster/console-plugins"
   );
-  cy.byTestID("console-plugins-table").should("exist");
+  cy.byTestID(`${PLUGIN_NAME}-status`).then(($status) => {
+    // Newly enabled plugins need a refresh once their endpoints are ready.
+    if (!/Loaded|Pending/.test($status.text())) {
+      cy.byTestID("refresh-web-console", { timeout: 120000 }).click();
+    }
+  });
   cy.byTestID("console-crontab-plugin-status").should("include.text", "Loaded");
 };
 
