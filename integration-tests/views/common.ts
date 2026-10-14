@@ -17,6 +17,9 @@ const waitForPluginLoaded = (retriesRemaining = 20) => {
   );
   cy.byTestID(`data-view-cell-${PLUGIN_NAME}-name`).should("be.visible");
   cy.byTestID(`${PLUGIN_NAME}-status`).then(($status) => {
+    expect($status.text(), `${PLUGIN_NAME} load status`).not.to.match(
+      /Failed/i
+    );
     if ($status.text().includes("Loaded")) {
       return;
     }
