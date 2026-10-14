@@ -1,6 +1,8 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  // Console uses this user agent to suppress the asynchronous Welcome tour.
+  userAgent: "ConsoleIntegrationTestEnvironment",
   viewportWidth: 1920,
   viewportHeight: 1080,
   screenshotsFolder: "./artifacts/screenshots",
