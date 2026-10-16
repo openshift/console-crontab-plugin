@@ -31,7 +31,7 @@ import {
   MenuToggleElement,
 } from "@patternfly/react-core";
 import { EllipsisVIcon } from "@patternfly/react-icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom-v5-compat";
 import { cronTabGroupVersionKind } from "src/utils/utils";
 import { CRONTAB_KIND_PLURAL } from "src/const";
 import {
@@ -128,7 +128,7 @@ const CronTabKebab: React.FC<CronTabKebabProps> = ({ obj }) => {
     name,
     namespace,
   });
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onFocus = () => {
     const element = document.getElementById("kebab-button");
@@ -163,7 +163,7 @@ const CronTabKebab: React.FC<CronTabKebabProps> = ({ obj }) => {
     </DropdownItem>,
     <DropdownItem
       key={KEBAB_ACTION_EDIT_ID}
-      onClick={() => history.push(editURL)}
+      onClick={() => navigate(editURL)}
       isDisabled={!canEditCronTab[0]}
       data-test-action={KEBAB_ACTION_EDIT_ID}
     >

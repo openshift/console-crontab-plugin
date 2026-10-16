@@ -21,7 +21,7 @@ Cypress.Commands.add("createProject", (name: string) => {
 
 Cypress.Commands.add("deleteProject", (name: string) => {
   cy.log(`Delete project`);
-  cy.exec(`oc delete project ${name}`).then((result) => {
+  cy.exec(`oc delete project ${name} --ignore-not-found`).then((result) => {
     result.stderr && cy.log("Error deleting project: ", result.stderr);
     result.stdout && cy.log("Successfully deleted project: ", result.stdout);
   });

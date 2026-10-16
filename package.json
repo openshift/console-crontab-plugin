@@ -81,7 +81,7 @@
       "CronTabForm": "src/views/CronTabForm/CronTabForm.tsx"
     },
     "dependencies": {
-      "@console/pluginAPI": "^4.11"
+      "@console/pluginAPI": "^4.11 || ^5.0.0-0"
     }
   },
   "resolutions": {

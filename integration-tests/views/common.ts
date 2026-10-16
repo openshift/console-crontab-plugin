@@ -10,6 +10,30 @@ const CRONTAB_PLUGIN_PULL_SPEC = Cypress.env("CRONTAB_PLUGIN_PULL_SPEC");
 export const getNamespacedListPageURL = (testName: string) =>
   `/k8s/ns/${testName}/${CRONTAB_APIGROUP}~${CRONTAB_APIVERSION}~${CRONTAB_KIND}`;
 
+const waitForPluginLoaded = (retriesRemaining = 20) => {
+  // Navigate on each retry to get fresh cookies after console-operator restarts.
+  cy.visit(
+    "/k8s/cluster/operator.openshift.io~v1~Console/cluster/console-plugins"
+  );
+  cy.byTestID(`data-view-cell-${PLUGIN_NAME}-name`).should("be.visible");
+  cy.byTestID(`${PLUGIN_NAME}-status`).then(($status) => {
+    expect($status.text(), `${PLUGIN_NAME} load status`).not.to.match(
+      /Failed/i
+    );
+    if ($status.text().includes("Loaded")) {
+      return;
+    }
+    expect(
+      retriesRemaining,
+      `${PLUGIN_NAME} should become Loaded`
+    ).to.be.greaterThan(0);
+    // Match the Console Playwright test's polling interval during reconciliation.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(15000);
+    waitForPluginLoaded(retriesRemaining - 1);
+  });
+};
+
 export const installHelmChart = (path: string) => {
   cy.exec(
     `cd ../../console-crontab-plugin && ${path} upgrade -i ${PLUGIN_NAME} charts/console-crontab-plugin -n ${PLUGIN_NAME} --create-namespace --set plugin.image=${CRONTAB_PLUGIN_PULL_SPEC}`
@@ -18,11 +42,7 @@ export const installHelmChart = (path: string) => {
     result.stdout &&
       cy.log("Successfully installed helm chart: ", result.stdout);
   });
-  cy.visit(
-    "/k8s/cluster/operator.openshift.io~v1~Console/cluster/console-plugins"
-  );
-  cy.byTestID("console-plugins-table").should("exist");
-  cy.byTestID("console-crontab-plugin-status").should("include.text", "Loaded");
+  waitForPluginLoaded();
 };
 
 export const deleteHelmChart = (path: string) => {
