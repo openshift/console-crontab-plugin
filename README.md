@@ -12,14 +12,15 @@ Before you can deploy your plugin on a cluster, you must build an image and
 push it to an image registry.
 
 1. Build the image:
-   
-   NOTE: If you have a Mac with Apple silicon, you will need to add the flag
-   `--platform=linux/amd64` when building the image to target the correct platform
-   to run in-cluster.
 
    ```sh
    docker build -f Dockerfile -t $NAME/console-crontab-plugin:latest . --no-cache
    ```
+
+   > [!TIP]
+   > If you have a Mac with Apple silicon, you will need to add the flag
+   > `--platform=linux/amd64` when building the image to target the correct platform
+   > to run in-cluster.
 
 2. Push the image:
 
